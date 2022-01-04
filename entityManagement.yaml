@@ -23,26 +23,24 @@ tags:
 - name: role
   description: Role - Registration API
 - name: route
-  description: Route - Registration API
-- name: route
-  description: Route - Registration API
-- name: customerGroupRegister
-  description: customer group registration API
-- name: dayEndMaster
-  description: day end registration API
-- name: financialYear
-  description: financial year registration API
-- name: regionMaster
-  description: region master registration API
-- name: ruleMaster
-  description: rule master registration API
-- name: seriesMaster
-  description: series master registration API
-- name: serviceType
-  description: service type registration API
+  description: Route -  API
+- name: customergroup
+  description: customer group  API
+- name: dayend
+  description: day end  API
+- name: financialyear
+  description: financial year  API
+- name: region
+  description: region master  API
+- name: rule
+  description: rule master  API
+- name: series
+  description: series master  API
+- name: servicetype
+  description: servicetype  API
 - name: tax
   description: Tax API
-- name: Termsandconditions
+- name: terms and conditions
   description: Terms and conditions API
 - name: territory
   description: Territory API
@@ -115,7 +113,7 @@ paths:
       requestBody:
         description: Creates entity object
         content:
-          '*/*':
+          'application/json':
             schema:
               $ref: '#/components/schemas/entity'
         required: true
@@ -127,14 +125,14 @@ paths:
             schema:
              $ref: '#/components/schemas/ApiResponse'
               
-  /Entity/updateEntity:
+  /Entity/updateEntity/{entityId}:
     put:
       tags:
       - entity
       summary: update an entity
       operationId: update an entity
       parameters:
-      - name: id
+      - name: entityId
         in: query
         description: entity id
         required: true
@@ -143,7 +141,7 @@ paths:
       requestBody:
         description: List of user object
         content:
-          '*/*':
+          'application/json':
             schema:
               type: array
               items:
@@ -193,7 +191,6 @@ paths:
       parameters:
       - name: entityTypeId
         in: path
-        description: entity type id
         required: true
         schema:
           type: string
@@ -203,17 +200,23 @@ paths:
         400:
           description: Invalid entityTypeId supplied
           content: {}
-  /User/createUser:
+  /Entity/createUser:
     post:
       tags:
       - user
-      summary: Creates user
+      summary: create user
       description: This can only be done by the logged in user.
       operationId: createUser
+      parameters:
+      - name: userName
+        in: path
+        required: true
+        schema:
+          type: string
       requestBody:
         description: Created user object
         content:
-          '*/*':
+          'application/json':
             schema:
               $ref: '#/components/schemas/user'
         required: true
@@ -224,16 +227,16 @@ paths:
            application/json:
             schema:
              $ref: '#/components/schemas/ApiResponse'
-  /User/updateUser:
+  /Entity/updateUser:
     put:
       tags:
       - user
-      summary: updates an user 
+      summary: update user 
       operationId: updateUser
       requestBody:
         description: List of user object
         content:
-          '*/*':
+          'application/json':
             schema:
               type: array
               items:
@@ -246,16 +249,16 @@ paths:
            application/json:
             schema:
              $ref: '#/components/schemas/ApiResponse'
-  /User/listAllUser:
+  /Entity/listAllUser:
     get:
       tags:
       - user
-      summary: Lists all users
+      summary: list all users
       operationId: listAllUser
       responses:
         200:
           description: success
-  /User/listUserByDivision/{divisionId}:
+  /Entity/listUserByDivision/{divisionId}:
     get:
       tags:
       - user
@@ -264,24 +267,21 @@ paths:
       parameters:
       - name: divisionId
         in: path
-        description: divisionId of the user
         required: true
         schema:
           type: string
       responses:
         200:
          description: success
-     
-  /User/listUserById{userId}:
+  /Entity/listUserById{Id}:
     get:
       tags:
       - user
-      summary: Lists user by Id
+      summary: list user by Id
       operationId: listUserById
       parameters:
-      - name: userId
+      - name: Id
         in: path
-        description: userId of the user
         required: true
         schema:
           type: string
@@ -291,17 +291,24 @@ paths:
         400:
           description: Invalid userId supplied
           content: {}
-  /Role/createRole:
+  /Entity/createRole:
     post:
       tags:
       - role
       summary: Create role
       description: Roles
       operationId: createRole
+      parameters:
+      - name: roleName
+        in: path
+        description: roleName of the user
+        required: true
+        schema:
+          type: string
       requestBody:
         description: Creates role
         content:
-          '*/*':
+          'application/json':
             schema:
               $ref: '#/components/schemas/role'
         required: true
@@ -312,12 +319,19 @@ paths:
            application/json:
             schema:
              $ref: '#/components/schemas/ApiResponse'
-  /Role/updateRole:
+  /Entity/updateRole/{Id}:
     put:
       tags:
       - role
-      summary: updates role
+      summary: update a role
       operationId: updateRole
+      parameters:
+      - name: Id
+        in: path
+        description: roleId of the user
+        required: true
+        schema:
+          type: string
       requestBody:
         description: updates a role object
         content:
@@ -334,7 +348,8 @@ paths:
            application/json:
             schema:
              $ref: '#/components/schemas/ApiResponse'
-  /Role/listAllRoles/{entityId}:
+
+  /Entity/listAllRoles/{entityId}:
     get:
       tags:
       - role
@@ -351,14 +366,14 @@ paths:
         200:
           description: success
           
-  /Role/listRoleById/{roleId}:
+  /Entity/listRoleById/{Id}:
     get:
       tags:
       - role
       summary: Lists roles by Id
       operationId: listRoleById
       parameters:
-      - name: roleId
+      - name: Id
         in: path
         description: roleId of the user
         required: true
@@ -369,7 +384,7 @@ paths:
           description: success
         400:
           description: Invalid RoleId supplied
-  /Facility/createRoute:
+  /Entity/createRoute:
     post:
       tags:
       - route
@@ -400,7 +415,7 @@ paths:
       requestBody:
         description: Creates entity object
         content:
-          '*/*':
+          'application/json':
             schema:
               $ref: '#/components/schemas/route_register'
         required: true
@@ -411,14 +426,14 @@ paths:
            application/json:
             schema:
              $ref: '#/components/schemas/ApiResponse'
-  /Facility/updateRoute:
+  /Entity/updateRoute/{Id}:
     put:
       tags:
       - route
       summary: Update a route
       operationId: updateRoute
       parameters:
-      - name: routeId
+      - name: Id
         in: query
         required: true
         schema:
@@ -426,7 +441,7 @@ paths:
       requestBody:
         description: List of route object
         content:
-          '*/*':
+          'application/json':
             schema:
               type: array
               items:
@@ -439,7 +454,7 @@ paths:
            application/json:
             schema:
              $ref: '#/components/schemas/ApiResponse'
-  /Facility/listAllRoute/{entityId}:
+  /Entity/listAllRoute/{entityId}:
     get:
       tags:
       - route
@@ -453,16 +468,15 @@ paths:
           type: string
       responses:
         200:
-          description: success
-          
-  /Facility/listRouteById/{routeId}:
+          description: success  
+  /Entity/listRouteById/{Id}:
     get:
       tags:
       - route
-      summary: Lists rack by Id
+      summary: Lists route by Id
       operationId: listRouteById
       parameters:
-      - name: routeId
+      - name: Id
         in: path
         required: true
         schema:
@@ -473,6 +487,1061 @@ paths:
         400:
           description: Invalid routeId supplied
           content: {}
+
+  /Entity/createCustomerGroup:
+    post:
+      tags:
+      - customergroup
+      summary: create a customer group
+      operationId: createCustomerGroup
+      parameters:
+      - name: customerGroupName
+        in: path
+        description: customerGroupName of the user
+        required: true
+        schema:
+          type: string
+      - name: shortName
+        in: path
+        description: shortName of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates customer group
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/customer_group_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/updateCustomerGroup/{Id}:
+    put:
+      tags:
+      - customergroup
+      summary: update a customer group
+      operationId: updateCustomerGroup
+      parameters:
+      - name: Id
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: updates a customer group object
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/customer_group_register_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/listAllcustomerGroups{entityId}:
+    get:
+      tags:
+      - customergroup
+      summary: create a list of customer groups 
+      operationId: listAllcustomerGroups
+      parameters:
+      - name: Id
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: success
+  /Entity/listcustomerGroupById{entityId}:
+    get:
+      tags:
+      - customergroup
+      summary: list customer groups by Id
+      operationId: listcustomerGroupsById
+      
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid RoleId supplied
+  /Entity/createDayEnd:
+    post:
+      tags:
+      - dayend
+      summary: create a dayend 
+      description: day end entry
+      operationId: createDayEnd
+      parameters:
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: status
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: endTime
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Creates a day end
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/day_end_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/updateDayEnd/{Id}:
+    put:
+      tags:
+      - dayend
+      summary: update a day end 
+      operationId: updateDayEnd
+      parameters:
+      - name: Id
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: updates a day end
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/day_end_master_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/listAllDayEnd{entityId}:
+    get:
+      tags:
+      - dayend
+      summary: list of dayend
+      operationId: listAllDayEnd
+      parameters:
+      - name: entityId
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success    
+  /Entity/listDayEndById{dId}:
+    get:
+      tags:
+      - dayend
+      summary: list day end  by Id
+      operationId: listDayEndById
+      parameters:
+      - name: Id
+        in: path
+        description: dayEndId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid RoleId supplied
+
+  /Entity/createFinancialYear:
+    post:
+      tags:
+      - financialyear
+      summary: create a financialYear 
+      description: financial year entry
+      operationId: createFinancialYear
+      parameters:
+      - name: financialYearName
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: shortName
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: startDate
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: endDate
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Creates a financial year
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/financial_year_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/updateFinancialYear/{Id}:
+    put:
+      tags:
+      - financialyear
+      summary: update a financial year
+      operationId: updateFinancialYear
+      parameters:
+      - name: Id
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: updates a financial year
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/financial_year_master_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/listAllFinancialYear{entityId}:
+    get:
+      tags:
+      - financialyear
+      summary: create a list of financial years
+      operationId: listAllFinancialYear
+      parameters:
+      - name: entityId
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success   
+  /Entity/listFinancialYearById{Id}:
+    get:
+      tags:
+      - financialyear
+      summary: list financial year  by Id
+      operationId: listFinancialYearById
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid Id supplied
+
+  /Entity/createRegionMaster:
+    post:
+      tags:
+      - region
+      summary: create a region 
+      description: region entry
+      operationId: createRegionMaster
+      parameters:
+      - name: regionName
+        in: path
+        description: regionName of the user
+        required: true
+        schema:
+          type: string
+      - name: shortName
+        in: path
+        description: regionName of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates a financial year
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/region_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Entity/updateRegionMaster/{Id}:
+    put:
+      tags:
+      - region
+      summary: update a region
+      operationId: updateRegionMaster
+      parameters:
+      - name: Id
+        in: path
+        description: id of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: updates a region
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/region_register_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/listAllRegions{entityId}:
+    get:
+      tags:
+      - region
+      summary: create a list of regions
+      operationId: listAllRegions
+      parameters:
+      - name: entityId
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success   
+  /Entity/listAllRegionById{Id}:
+    get:
+      tags:
+      - region
+      summary: list region by Id
+      operationId: listAllRegionById
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid Id supplied
+  /Entity/createRule:
+    post:
+      tags:
+      - rule
+      summary: create a rule 
+      description: rule entry
+      operationId: createRuleMaster
+      requestBody:
+        description: Creates a rule
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/rule_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/updateRule/{Id}:
+    put:
+      tags:
+      - rule
+      summary: update a rule
+      operationId: updateRuleMaster
+      parameters:
+      - name: Id
+        in: path
+        description: ruleId of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: updates a rule
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/rule_master_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/listAllRules{entityId}:
+    get:
+      tags:
+      - rule
+      summary: create a list of rules
+      operationId: listAllRules
+      parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success   
+  /Entity/listAllRulesById{Id}:
+    get:
+      tags:
+      - rule
+      summary: list rule by Id
+      operationId: listAllRulesById
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid Id supplied
+  /Entity/createSeries:
+    post:
+      tags:
+      - series
+      summary: create a series 
+      description: series entry
+      operationId: createSeries
+      parameters:
+      - name: seriesName
+        in: path
+        description: seriesName of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates a series
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/series_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/updateSeries:
+    put:
+      tags:
+      - series
+      summary: update a series
+      operationId: updateSeries
+      parameters:
+      - name: seriesId
+        in: path
+        description: seriesName of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: updates a series
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/series_master_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/listAllSeries{entityId}:
+    get:
+      tags:
+      - series
+      summary: create a list of series
+      operationId: listAllSeries
+      parameters:
+      - name: entityId
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success   
+  /Entity/listAllSeriesById{Id}:
+    get:
+      tags:
+      - series
+      summary: list series by Id
+      operationId: listAllRulesById
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid Id supplied
+
+  /Entity/createServiceType:
+    post:
+      tags:
+      - servicetype
+      summary: create a servicetype 
+      description: service type entry
+      operationId: createServiceType
+      parameters:
+      - name: serviceTypeName
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      - name: shortName
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates a servicetype
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/service_type_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/updateServiceType:
+    put:
+      tags:
+      - servicetype
+      summary: update a service type
+      operationId: updateServiceType
+      parameters:
+      - name: id
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: updates a series
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/service_type_register_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/listAllServiceTypes/{entityId}:
+    get:
+      tags:
+      - servicetype
+      summary: create a list of servicetypes
+      operationId: listAllServiceTypes
+      parameters:
+      - name: entityId
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success   
+  /Entity/listServiceTypeById{Id}:
+    get:
+      tags:
+      - servicetype
+      summary: list servicetype by Id
+      operationId: listSeriesById
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid Id supplied
+  /Entity/createTax:
+    post:
+      tags:
+      - tax
+      summary: create a tax 
+      description: tax entry
+      operationId: createTax
+      parameters:
+      - name: taxName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taxValue
+        in: path
+        required: true
+        schema:
+          type: number
+          format: float
+      - name: salesTaxType
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: salesSgst
+        in: path
+        required: true
+        schema:
+          type: number
+          format: float
+      - name: salesCgst
+        in: path
+        required: true
+        schema:
+          type: number
+          format: float
+      - name: salesIgst
+        in: path
+        required: true
+        schema:
+          type: number
+          format: float
+      - name: purchaseTaxType
+        in: path
+        required: true
+        schema:
+          type: string
+          format: varchar
+      - name: purchaseSgst
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: purchaseCgst
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: purchaseIgst
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: gstOnMRPSales
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: gst_on_scheme_value_sales
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: gst_on_mrp_pur
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: gst_on_scheme_value_pur
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: gst_discount_sales
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: gst_discount_pur
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: saleStatus
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: purStatus
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: taxDescription
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: syncStatus
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: entityTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: createdUser
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: modifiedUser
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/tax_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Entity/updateTax/{Id}:
+    put:
+      tags:
+      - tax
+      summary: update a tax
+      operationId: updateTax
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: updates a tax
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/tax_register_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Entity/listAllTax/{entityId}:
+    get:
+      tags:
+      - tax
+      summary: create a list of tax
+      operationId: listAllTax
+      parameters:
+      - name: entityId
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success   
+  /Entity/listTaxById/{Id}:
+    get:
+      tags:
+      - tax
+      summary: list tax by Id
+      operationId: listTaxById
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid Id supplied
+  /Entity/createTermsAndConditions:
+    post:
+      tags:
+      - terms and conditions
+      summary: create terms and conditions
+      description: terms and conditions
+      operationId: createTax
+      parameters:
+      - name: formId
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates terms
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/terms_conditions_details'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/updateTermsAndConditions/{Id}:
+    put:
+      tags:
+      - terms and conditions
+      summary: update terms and conditions
+      operationId: updateTermsAndConditions
+      parameters:
+      - name: Id
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: update terms
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/terms_conditions_details_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/listAllTermsAndConditions/{entityId}:
+    get:
+      tags:
+      - terms and conditions
+      summary: create a list of terms and conditions
+      operationId: listAllTermsAndConditions
+      parameters:
+      - name: entityId
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success   
+  /Entity/listTermsAndConditionsById/{Id}:
+    get:
+      tags:
+      - terms and conditions
+      summary: list terms and conditions by Id
+      operationId: listTermsAndConditionsById
+      parameters:
+      - name: Id
+        in: path
+        description: Id of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid Id supplied
+  /Entity/createTerritory:
+    post:
+      tags:
+      - territory
+      summary: create territory
+      description: territory
+      operationId: createTerritory
+      requestBody:
+        description: Creates territories
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/territory_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Entity/updateTerritory:
+    put:
+      tags:
+      - territory
+      summary: update territories
+      operationId: updateTerritory
+      requestBody:
+        description: update territories
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/territory_register_update'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Entity/listAllTerritories:
+    get:
+      tags:
+      - territory
+      summary: create a list of terms and conditions
+      operationId: listAllTerritories
+      parameters:
+      - name: entityId
+        in: path
+        description: entityId of the user
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success   
+  /Entity/listTerritoriesById/{Id}:
+    get:
+      tags:
+      - territory
+      summary: list territory by Id
+      operationId: listTerritoriesById
+      parameters:
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid Id supplied
 components:
   schemas:
     entity:
@@ -598,19 +1667,6 @@ components:
         status:
           type: integer
           format: int32
-        syncStatus:
-          type: integer
-          format: int32
-        createdDate:
-          type: string
-          format: date
-        modifiedDate:
-          type: string
-          format: date
-        createdUser:
-          type: integer
-        modifiedUser:
-          type: integer
       xml:
         name: Entity
     user:
@@ -712,18 +1768,6 @@ components:
         roleId:
           type: integer
           format: int64
-        entityTypeId:
-          type: integer
-          format: int64
-        entityId:
-          type: integer
-          format: int64
-        createdDate:
-          type: string
-          format: date
-        modifiedDate:
-          type: string
-          format: date
       xml:
         name: User
     role:
@@ -742,13 +1786,7 @@ components:
          type: integer
         entityName:
           type: string
-        entityTypeId:
-          type: integer
-          format: int32
-        entityId:
-          type: integer
-          format: int32
-        affiliationAccountId:
+        affiliate:
           type: integer
           format: int32
         addressLine1:
@@ -873,19 +1911,6 @@ components:
         status:
           type: integer
           format: int32
-        syncStatus:
-          type: integer
-          format: int32
-        createdDate:
-          type: string
-          format: date
-        modifiedDate:
-          type: string
-          format: date
-        createdUser:
-          type: integer
-        modifiedUser:
-          type: integer
       xml:
         name: Entity
     user_update:
@@ -989,18 +2014,6 @@ components:
         roleId:
           type: integer
           format: int64
-        entityTypeId:
-          type: integer
-          format: int64
-        entityId:
-          type: integer
-          format: int64
-        createdDate:
-          type: string
-          format: date
-        modifiedDate:
-          type: string
-          format: date
       xml:
         name: User
     role_update:
@@ -1047,25 +2060,6 @@ components:
           status:
            type: integer
            format: int32
-          syncStatus: 
-           type: integer
-           format: int32
-          entityTypeId:
-           type: integer
-           format: int32
-          entityId:
-           type: integer
-           format: int64
-          createdDate:
-           type: string
-           format: date
-          modifiedDate:
-           type: string
-           format: date
-          createdUser:
-           type: integer
-          modifiedUser:
-           type: integer
     route_register_update:
         type: object
         properties:
@@ -1100,26 +2094,16 @@ components:
           status:
            type: integer
            format: int32
-          syncStatus: 
-           type: integer
-           format: int32
-          entityTypeId:
-           type: integer
-           format: int32
-          entityId:
-           type: integer
-           format: int64
-          createdDate:
-           type: string
-           format: date
-          modifiedDate:
-           type: string
-           format: date
-          createdUser:
-           type: integer
-          modifiedUser:
-           type: integer   
     customer_group_register:
+        type: object
+        properties:
+          customerGroupName:
+            type: string
+            format: varchar45
+          shortName:
+           type: string
+           format: varchar45
+    customer_group_register_update:
         type: object
         properties:
           Id:
@@ -1130,24 +2114,16 @@ components:
           shortName:
            type: string
            format: varchar45
-          entityId:
-           type: integer
-           format: bigint
-          entityTypeId:
-           type: integer
-          createdDate:
-           type: string
-           format: date-time
-          modifiedDate:
-           type: string
-           format: date-time
-          createdUser:
-           type: integer
-           format: bigint
-          modifiedUser:
-           type: integer
-           format: bigint   
     day_end_master:
+        type: object
+        properties:
+          date: 
+           type: string
+           format: date
+          status:
+           type: string
+           format: varchar
+    day_end_master_update:
         type: object
         properties:
           dayEndId:  
@@ -1158,8 +2134,355 @@ components:
           status:
            type: string
            format: varchar
-
-
+    financial_year_master:
+         type: object
+         properties:
+          financialYearName: 
+           type: string
+           format: varchar
+          shortName: 
+           type: string
+           format: varchar
+          startDate:
+           type: string
+           format: date
+          endDate:
+           type: string
+           format: date
+          status:
+           type: integer
+    financial_year_master_update:
+         type: object
+         properties:
+          financialYearId:
+           type: integer
+          financialYearName: 
+           type: string
+           format: varchar
+          shortName: 
+           type: string
+           format: varchar
+          startDate:
+           type: string
+           format: date
+          endDate:
+           type: string
+           format: date
+          status:
+           type: integer
+    region_register:
+         type: object
+         properties:
+          regionName:
+           type: string
+           format: varchar
+          shortName:
+            type: string
+            format: varchar
+          regionStateIds:
+           type: string
+           format: longtext
+          countryId:
+           type: integer
+           format: bigint
+    region_register_update:
+         type: object
+         properties:
+          id:
+            type: integer
+          regionName:
+           type: string
+           format: varchar
+          shortName:
+            type: string
+            format: varchar
+          regionStateIds:
+           type: string
+           format: longtext
+          countryId:
+           type: integer
+           format: bigint
+    rule_master:
+         type: object
+         properties:
+          dlExpired: 
+           type: integer
+          foodLicenseExpired:
+           type: integer
+          salesValueLimit:
+           type: integer
+          creditGraceCheck:
+           type: integer
+          checkDate:
+           type: string
+           format: date
+          scheme:
+           type: integer
+    rule_master_update:
+         type: object
+         properties:
+          ruleId:
+            type: integer 
+          dlExpired: 
+           type: integer
+          foodLicenseExpired:
+           type: integer
+          salesValueLimit:
+           type: integer
+          creditGraceCheck:
+           type: integer
+          checkDate:
+           type: string
+           format: date
+          scheme:
+           type: integer
+    series_master:
+         type: object
+         properties:
+          seriesCode:
+           type: string
+           format: varchar
+          seriesName:
+           type: string
+           format: varchar
+          mode:
+           type: integer
+          saleId:
+           type: integer
+          returnId:
+           type: integer
+          orderId:
+           type: integer
+          status:
+           type: integer
+    series_master_update:
+         type: object
+         properties:
+          seriesId:
+           type: integer
+          seriesCode:
+           type: string
+           format: varchar
+          seriesName:
+           type: string
+           format: varchar
+          mode:
+           type: integer
+          saleId:
+           type: integer
+          returnId:
+           type: integer
+          orderId:
+           type: integer
+          status:
+           type: integer
+    service_type_register:
+         type: object
+         properties:
+          serviceTypeName:
+           type: string
+           format: varchar
+          shortName:
+           type: string
+           format: varchar
+    service_type_register_update:
+         type: object
+         properties:
+          id:
+           type: integer
+          serviceTypeName:
+           type: string
+           format: varchar
+          shortName:
+           type: string
+           format: varchar
+    tax_register:
+         type: object
+         properties:
+          taxName:
+           type: integer
+          taxValue:
+           type: number
+           format: float
+          salesTaxType: 
+           type: integer
+           format: float
+          salesSgst: 
+           type: integer
+           format: float
+          salesCgst:
+           type: integer
+          salesIgst:
+           type: integer
+           format: float
+          purchaseTaxType:
+           type: string
+           format: varchar
+          purchaseSgst:
+           type: integer
+           format: float
+          purchaseCgst:
+           type: integer
+           format: float
+          purchaseIgst:
+           type: integer
+           format: float
+          gstOnMRPSales:
+           type: string
+           format: varchar
+          gst_on_scheme_value_sales:
+           type: string
+           format: varchar
+          gst_on_mrp_pur:
+           type: string
+           format: varchar
+          gst_on_scheme_value_pur:
+            type: string
+            format: varchar
+          gst_discount_sales:
+            type: string
+            format: varchar
+          gst_discount_pur:
+            type: string
+            format: varchar
+          sale_status:
+            type: string
+            format: varchar
+          pur_status:
+            type: string
+            format: varchar
+          tax_description:
+            type: string
+            format: longtext
+    tax_register_update:
+         type: object
+         properties:
+          taxId:
+           type: integer
+          taxName:
+           type: integer
+          taxValue:
+           type: number
+           format: float
+          salesTaxType: 
+           type: integer
+           format: float
+          salesSgst: 
+           type: integer
+           format: float
+          salesCgst:
+           type: integer
+          salesIgst:
+           type: integer
+           format: float
+          purchaseTaxType:
+           type: string
+           format: varchar
+          purchaseSgst:
+           type: integer
+           format: float
+          purchaseCgst:
+           type: integer
+           format: float
+          purchaseIgst:
+           type: integer
+           format: float
+          gstOnMRPSales:
+           type: string
+           format: varchar
+          gst_on_scheme_value_sales:
+           type: string
+           format: varchar
+          gst_on_mrp_pur:
+           type: string
+           format: varchar
+          gst_on_scheme_value_pur:
+            type: string
+            format: varchar
+          gst_discount_sales:
+            type: string
+            format: varchar
+          gst_discount_pur:
+            type: string
+            format: varchar
+          sale_status:
+            type: string
+            format: varchar
+          pur_status:
+            type: string
+            format: varchar
+          tax_description:
+            type: string
+            format: longtext
+    terms_conditions_details:
+         type: object
+         properties:
+          formId:
+            type: integer
+            format: bigint
+          termCondition:
+           type: string
+           format: longtext
+          status:
+           type: integer
+    terms_conditions_details_update:
+         type: object
+         properties:
+          termId:
+           type: integer
+           format: bigint
+          formId:
+            type: integer
+            format: bigint
+          termCondition:
+           type: string
+           format: longtext
+          status:
+           type: integer
+    territory_register:
+         type: object
+         properties:
+          territoryName:
+           type: string
+           format: varchar
+          shortName:
+            type: string
+            format: varchar
+          territoryHq:
+           type: integer
+           format: bigint
+          cityIds:
+           type: string
+           format: longtext
+          stateIds:
+           type: string
+           format: longtext
+          countryId:
+           type: integer
+           format: bigint
+    territory_register_update:
+         type: object
+         properties:
+          id:
+           type: integer
+          territoryName:
+           type: string
+           format: varchar
+          shortName:
+            type: string
+            format: varchar
+          territoryHq:
+           type: integer
+           format: bigint
+          cityIds:
+           type: string
+           format: longtext
+          stateIds:
+           type: string
+           format: longtext
+          countryId:
+           type: integer
+           format: bigint
     ApiResponse:
       type: array
       items:
