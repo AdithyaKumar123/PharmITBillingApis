@@ -1,0 +1,1182 @@
+openapi: 3.0.1
+info:
+  title: Product Management
+  description: This is a sample server product management.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: team@pharmIT.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about pharmit
+  url: http://pharmit.in
+servers:
+- url: https://localhost:3000/v1
+- url: http://localhost:30000/v1
+tags:
+- name: productCategory
+  description: ProductCategory - API
+- name: productDivision
+  description: productDivision - API
+- name: productComposition
+  description:  productComposition - API
+- name: productGroup
+  description: productGroup - API
+- name: productCostRange
+  description: productCostRange - API
+- name: unitType
+  description: unitType API
+- name: productSchedule
+  description: productSchedule API
+- name: product
+  description: product API
+  
+paths:
+  /Product/createProductCategory:
+    post:
+      tags:
+      - productCategory
+      summary: create a new category
+      description: create a new category.
+      operationId: createProductCategory
+      parameters:
+      - name: categoryName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates product object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/product_category_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+             
+  /Product/editProduct:
+    put:
+      tags:
+      - productCategory
+      summary: edit an existing category
+      operationId: editProduct
+      parameters:
+      - name: categoryId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of product object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/product_category_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+             
+  /Product/listProductCategoryById{categoryId}:
+    get:
+      tags:
+      - productCategory
+      summary: list product category by Id
+      operationId: listProductCategoryById
+      parameters:
+      - name: categoryId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+          
+  /Product/listAllProductCategory{entityId}:
+    get:
+      tags:
+      - productCategory
+      summary: list all product categories
+      operationId: listAllProductCategory
+      parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid id supplied
+          content: {}
+          
+  /Product/createDivision:
+    post:
+      tags:
+      - productDivision
+      summary: create a division
+      description: create a new division.
+      operationId: createDivision
+      parameters:
+      - name: divisionName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: divisionShortName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: seriesId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Creates entity object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/division'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+             
+  /Product/updateDivision:
+    put:
+      tags:
+      - productDivision
+      summary: update a division
+      operationId: updateDivision
+      parameters:
+      - name: divisionId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: division object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/division'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Product/listAllDivision/{entityId}:
+    get:
+      tags:
+      - productDivision
+      summary: lists all the divisions
+      operationId: listAllDivision
+      parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+          
+  /Facility/listDivisionById/{divisionId}:
+    get:
+      tags:
+      - productDivision
+      summary: list division by Id
+      operationId: listDivisionById
+      parameters:
+      - name: divisionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid Id supplied
+          content: {}
+          
+  /Product/createProductComposition:
+    post:
+      tags:
+      - productComposition
+      summary: create product composition
+      description: create a new composition.
+      operationId: createProductComposition
+      parameters:
+      - name: compositionName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates composition object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/composition_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+             
+  /Product/updateProductComposition:
+    put:
+      tags:
+      - productComposition
+      summary: update a product composition
+      operationId: updateProductComposition
+      parameters:
+      - name: compositionId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of composition object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/composition_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+             
+  /Product/listAllProductComposition/{entityId}:
+    get:
+      tags:
+      - productComposition
+      summary: list all the product compositions
+      operationId: listAllProductComposition
+      parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+          
+  /Product/listProductCompositionById/{compositionId}:
+    get:
+      tags:
+      - productComposition
+      summary: list product composition by Id
+      operationId: listProductCompositionById
+      parameters:
+      - name: compositionId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid godownId supplied
+          content: {}
+          
+  /Product/createProductGroup:
+    post:
+      tags:
+      - productGroup
+      summary: create a product group
+      description: create a product group
+      operationId: createProductGroup
+      parameters:
+      - name: groupName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates group object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/product_group_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Product/updateProductGroup:
+    put:
+      tags:
+      - productGroup
+      summary: update a product group
+      operationId: updateProductGroup
+      parameters:
+      - name: groupId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of group object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/product_group_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Product/listAllProductGroup/{entityId}:
+    get:
+      tags:
+      - productGroup
+      summary: list all the groups
+      operationId: listAllProductGroup
+      parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+          
+  /Product/listProductGroupById/{groupId}:
+    get:
+      tags:
+      - productGroup
+      summary: list groups by Id
+      operationId: listProductGroupById
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid fridgeId supplied
+          content: {}
+          
+  /Product/createProductCostRange:
+    post:
+      tags:
+      - productCostRange
+      summary: create product cost range
+      description: create a new product cost range.
+      operationId: createProductCostRange
+      parameters:
+      - name: kitName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates createProductCostRange object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/product_cost_range'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Product/updateProductCostRange/{costId}:
+    put:
+      tags:
+      - productCostRange
+      summary: update a product cost range
+      operationId: updateCcm
+      parameters:
+      - name: costId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: list of product cost range object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/product_cost_range'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+             
+  /Product/listAllProductCostRange{entityId}:
+    get:
+      tags:
+      - productCostRange
+      summary: lists all the product cost ranges
+      operationId: listAllCcm
+      parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+          
+  /Product/listProductCostRangeById/{costId}:
+    get:
+      tags:
+      - productCostRange
+      summary: lists productCostRange by Id
+      operationId: list Product cost range by Id
+      parameters:
+      - name: costId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid id supplied
+          content: {}
+            
+  /Product/createUnitType:
+    post:
+      tags:
+      - unitType
+      summary: create a unit type
+      description: create a new unit type
+      operationId: createUnitType
+      parameters:
+      - name: unitName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates unit type object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/unit_type_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Product/updateUnitType/{unitId}:
+    put:
+      tags:
+      - unitType
+      summary: update a unit type
+      operationId: updateUnitType
+      parameters:
+      - name: unitId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: update unit type
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/unit_type_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Product/listAllUnitType{entityId}:
+    get:
+      tags:
+      - unitType
+      summary: list all the unit types
+      operationId: listAllUnitType
+      parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+          
+  /Product/listUnitTypeById/{unitId}:
+    get:
+      tags:
+      - unitType
+      summary: list all unit types by Id
+      operationId: listUnitTypeByID
+      parameters:
+      - name: unitId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid id supplied
+          content: {}
+  /Product/createProductSchedule:
+    post:
+      tags:
+      - productSchedule
+      summary: create a product schedule
+      description: create a new product schedule
+      operationId: createProductSchedule
+      parameters:
+      - name: scheduleCode
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates product schedule object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/product_schedule_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Product/updateProductSchedule/{scheduleId}:
+    put:
+      tags:
+      - productSchedule
+      summary: update a product schedule
+      operationId: updateProductSchedule
+      parameters:
+      - name: scheduleId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of product cost range object
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/product_schedule_master'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Product/listAllProductSchedule{entityId}:
+    get:
+      tags:
+      - productSchedule
+      summary: list all the product schedules
+      operationId: listAllProductSchedule
+      parameters:
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+          
+  /Product/listProductScheduleById/{scheduleId}:
+    get:
+      tags:
+      - productSchedule
+      summary: list product schedules by Id
+      operationId: listProductScheduleById
+      parameters:
+      - name: scheduleId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid id supplied
+          content: {}
+
+  /Product/createProduct:
+    post:
+      tags:
+      - product
+      summary: create a product
+      description: create a new product
+      operationId: createProduct
+      parameters:
+      - name: productName
+        in: query
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Creates product object
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/product_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+  /Product/updateProduct/{productId}:
+    put:
+      tags:
+      - product
+      summary: update a product
+      operationId: updateProduct
+      parameters:
+      - name: productId
+        in: query
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: List of products
+        content:
+          '*/*':
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/product_register'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+           application/json:
+            schema:
+             $ref: '#/components/schemas/ApiResponse'
+
+  /Product/listAllProducts{entityId}:
+    get:
+      tags:
+      - product
+      summary: list all the products
+      operationId: listAllProducts
+      parameters:
+      - name: entityId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+          
+  /Product/listProductById/{productId}:
+    get:
+      tags:
+      - product
+      summary: list products by Id
+      operationId: listProductById
+      parameters:
+      - name: productId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid id supplied
+          content: {}
+  /Product/listProductByDivision/{divisionId}:
+    get:
+      tags:
+      - product
+      summary: list products by divisionId
+      operationId: listProductByDivision
+      parameters:
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        400:
+          description: Invalid id supplied
+          content: {}
+components:
+   schemas:
+     product_category_master:
+        type: object
+        properties:
+          categoryId:
+            type: integer
+          categoryName:
+           type: string
+           format: longtext
+          restrictedCategory:
+            type: string
+            format: varchar
+          acessRestriction:
+            type: string
+            format: varchar
+          status:
+            type: integer
+          syncStatus: 
+            type: integer
+          entityTypeId:
+            type: integer
+          entityId:
+            type: integer
+          createdDate:
+            type: string
+            format: date-time
+          modifiedDate:
+            type: string
+            format: date-time
+          createdUser:
+            type: integer
+            format: bigint
+          modifiedUser:
+            type: integer 
+            format: bigint
+     division:
+        type: object
+        properties:
+          divisionId:
+            type: integer
+          companyId:
+            type: integer
+            format: bigint
+          divisionName:
+            type: string
+            format: varchar
+          divisionShortName:
+            type: string
+            format: varchar
+          zoneIds:
+            type: string
+            format: longtext
+          stateIds:
+            type: string
+            format: longtext
+          cityIds:
+            type: string
+            format: longtext
+          seriesId:
+            type: integer
+          managerId:
+            type: integer
+            format: bigint
+          status:
+           type: integer
+          syncStatus: 
+           type: integer
+          entityTypeId:
+           type: integer
+          entityId:
+           type: integer
+           format: bigint
+          createdDate:
+           type: string
+           format: date-time
+          modifiedDate:
+           type: string
+           format: date-time
+          createdUser:
+           type: integer
+           format: bigint
+          modifiedUser:
+           type: integer  
+           format: bigint
+           
+     composition_master:
+        type: object
+        properties:
+          compositionId:
+           type: integer
+           format: longtext
+          compositionName:
+            type: string
+            format: varchar
+          status:
+            type: integer
+          syncStatus: 
+            type: integer
+          entityTypeId:
+            type: integer
+          entityId:
+            type: integer
+            format: bigint
+          createdUser:
+            type: integer
+            format: bigint
+          modifiedUser:
+            type: integer
+            format: bigint
+            
+     product_group_master:
+        type: object
+        properties:
+          groupId:
+            type: integer
+          groupName:
+            type: string
+            format: varchar
+          groupDescription:
+            type: string
+            format: varchar
+          status:
+            type: integer
+          syncStatus: 
+            type: integer
+          entityTypeId:
+            type: integer
+          entityId:
+           type: integer
+           format: bigint
+          createdDate:
+            type: string
+            format: date-time
+          modifiedDate:
+            type: string
+            format: date-time
+          createdUser:
+            type: integer
+            format: bigint
+          modifiedUser:
+           type: integer 
+           format: bigint
+     product_cost_range:
+        type: object
+        properties:
+          costId:
+            type: integer
+          priceType:
+            type: string
+            format: varchar
+          minimumRate:
+            type: string
+            format: varchar
+          maximumRate:
+            type: string
+            format: varchar
+          status:
+            type: string
+          syncStatus: 
+            type: integer
+          entityTypeId:
+            type: integer
+          entityId:
+            type: integer
+            format: bigint
+          createdDate:
+            type: string
+            format: date-time
+          modifiedDate:
+            type: string
+            format: date-time
+          createdUser:
+            type: integer
+            format: bigint
+          modifiedUser:
+           type: integer
+           format: bigint
+           
+     unit_type_master:
+        type: object
+        properties:
+          unitId:
+            type: integer
+          unitName:
+            type: string
+            format: varchar
+          status:
+            type: integer
+          syncStatus: 
+            type: integer
+          entityTypeId:
+            type: integer
+          entityId:
+            type: integer
+            format: bigint
+          createdDate:
+            type: string
+            format: date-time
+          modifiedDate:
+            type: string
+            format: date-time
+          createdUser:
+            type: integer
+            format: bigint
+          modifiedUser:
+            type: integer 
+            format: bigint
+     product_schedule_master:
+        type: object
+        properties:
+          scheduleId:
+            type: integer
+          scheduleCode:
+            type: string
+            format: varchar
+          scheduleDescription:
+            type: string
+            format: varchar
+          status:
+            type: integer
+          syncStatus: 
+            type: integer
+          entityTypeId:
+            type: integer
+          entityId:
+           type: integer
+           format: bigint
+          createdDate:
+            type: string
+            format: date-time
+          modifiedDate:
+            type: string
+            format: date-time
+          createdUser:
+            type: integer
+            format: bigint
+          modifiedUser:
+           type: integer
+           format: bigint
+     product_register:
+        type: object
+        properties: 
+           productId:
+            type: integer
+            format: bigint
+           productCode:
+            type: string
+            format: longtext
+           productName:
+            type: string
+            format: longtext
+           manufacturerId:
+            type: integer
+            format: bigint
+           mktCompanyId:
+            type: integer
+            format: bigint
+           hsnCode:
+            type: string
+            format: varchar
+           rackId: 
+            type: integer
+           divisionId: 
+            type: integer
+           compositionId:
+            type: integer
+           costRangeId:
+            type: integer
+           productTypeId:
+            type: integer
+           unitId:
+            type: integer
+           unitPacking:
+            type: string
+            format: longtext
+           perLotQuantity:
+            type: string
+            format: varchar
+           purchaseRate: 
+            type: number
+            format: decimal
+           purchaseTradeDiscount:
+            type: number
+            format: decimal
+           purchaseMarginPercent:
+            type: number
+            format: decimal
+           saleRate:
+            type: number
+            format: decimal
+           saleTradeDiscount:
+            type: number
+            format: decimal
+           saleMarginPercent:
+            type: number
+            format: decimal
+           vipPRate:
+            type: number
+            format: decimal
+           vipSRate:
+            type: number
+            format: decimal
+           mrp:
+            type: number
+            format: decimal
+           ptr:
+            type: number
+            format: decimal
+           restrictedRate:
+              type: number
+              format: decimal 
+           nriRate:
+            type: number
+            format: decimal
+           salesmamCommission:
+            type: number
+            format: decimal
+           grossProfitPercentage: 
+            type: number
+            format: decimal
+           taxId:
+            type: integer
+            format: int32
+           thresholdLevel:
+            type: string
+            format: varchar
+           orderQuantity:
+            type: integer
+           groupId:
+            type: integer
+           scheduleId:
+            type: integer
+           categoryId:
+            type: integer
+           sendMail:
+            type: string
+            format: varchar
+           discountAllowed:
+            type: string
+            format: varchar
+           ccmProduct:
+            type: string
+            format: varchar
+           narration:
+            type: string
+            format: longtext
+           restrictedAssignment:
+            type: string
+            format: varchar
+           status:
+             type: string
+             format: varchar
+           syncStatus: 
+            type: integer
+           soundexCode:
+            type: string
+            format: varchar
+           entityTypeId:
+            type: integer
+           entityId:
+            type: integer
+            format: bigint
+           createdDate:
+            type: string
+            format: date-time
+           modifiedDate:
+            type: string
+            format: date-time
+           createdUser:
+            type: integer
+            format: bigint
+           modifiedUser:
+             type: integer
+             format: bigint
+     ApiResponse:
+         type: array
+         items:
+           properties:
+            status:
+              type: string
+            affectedRows:
+              type: integer
+              example: 1
+            insertId:
+              type: integer
+              example: 1
+   
