@@ -99,7 +99,10 @@ paths:
         required: true
         schema:
           type: integer
+        description: >
+          10 digits
       - name: pan
+        description: should be a valid panId
         in: query
         required: true
         schema:
@@ -110,6 +113,78 @@ paths:
         required: true
         schema:
           type: string
+      - name: email
+        in: query
+        schema:
+          type: string
+        description: >
+          Should be a valid email Id.
+      - name: drugLicenseValidity
+        in: query
+        schema:
+          type: string
+        description: >
+          Should be in the format yyyy-mm-dd
+      - name: foodLicenseValidity
+        in: query
+        schema:
+          type: string
+        description: >
+          Should be in the format yyyy-mm-dd
+      - name: noOfCrDays
+        in: query
+        schema:
+          type: string
+        description: >
+         only integer
+      - name: noOfGraceDays
+        in: query
+        schema:
+          type: string
+        description: >
+         only integer
+      - name: openingBalance
+        in: query
+        schema:
+          type: string
+        description: >
+         decimal number
+      - name: currentBalance
+        in: query
+        schema:
+          type: string
+        description: >
+         decimal number
+      - name: discount
+        in: query
+        schema:
+          type: string
+        description: >
+         numericals and decimal points
+      - name: bankCommission
+        in: query
+        schema:
+          type: string
+        description: >
+         numericals and decimal points
+      - name: defaultCharge
+        in: query
+        schema:
+          type: string
+        description: >
+          decimal number
+      - name: salesCommission
+        in: query
+        schema:
+          type: string
+        description: >
+          decimal number
+      - name: aadharId
+        in: query
+        schema:
+          type: string
+        description: >
+          valid aadhar number
       requestBody:
         description: Creates entity object
         content:
@@ -209,10 +284,77 @@ paths:
       operationId: createUser
       parameters:
       - name: userName
-        in: path
+        in: query
         required: true
         schema:
           type: string
+        description: >
+         full name
+      - name: aadharId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: mobileNumber
+        in: query
+        required: true
+        schema:
+          type: string
+          format: varchar
+        description: >
+         10 digit mobile number
+      - name: email
+        in: query
+        required: true
+        schema:
+          type: string
+        description: >
+          Should be a valid email Id.
+      - name: genderId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: countryId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: stateId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: cityId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: joiningDate
+        in: query
+        schema:
+          type: string
+          format:  date
+        description: >
+          Should be in the format yyyy-mm-dd
+      - name: loginId
+        in: query
+        required: true
+        schema:
+          type: string
+          format:  date
+      - name: password
+        in: query
+        required: true
+        schema:
+          type: string
+          format:  date
+      - name: status
+        in: query
+        required: true
+        schema:
+          type: string
+          format: varchar
       requestBody:
         description: Created user object
         content:
@@ -233,6 +375,12 @@ paths:
       - user
       summary: update user 
       operationId: updateUser
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
       requestBody:
         description: List of user object
         content:
@@ -302,6 +450,11 @@ paths:
       - name: roleName
         in: path
         description: roleName of the user
+        required: true
+        schema:
+          type: string
+      - name: description
+        in: path
         required: true
         schema:
           type: string
@@ -797,13 +950,21 @@ paths:
       parameters:
       - name: regionName
         in: path
-        description: regionName of the user
         required: true
         schema:
           type: string
       - name: shortName
         in: path
-        description: regionName of the user
+        required: true
+        schema:
+          type: string
+      - name: regionStateIds
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: countryId
+        in: path
         required: true
         schema:
           type: string
@@ -978,12 +1139,36 @@ paths:
       description: series entry
       operationId: createSeries
       parameters:
-      - name: seriesName
-        in: path
-        description: seriesName of the user
+      - name: seriesCode
+        in: query
         required: true
         schema:
           type: string
+      - name: seriesName
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: mode
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: saleId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: returnId
+        in: query
+        required: true
+        schema:
+          type: integer
+      - name: orderId
+        in: query
+        required: true
+        schema:
+          type: integer
       requestBody:
         description: Creates a series
         content:
@@ -1472,6 +1657,43 @@ paths:
       summary: create territory
       description: territory
       operationId: createTerritory
+      parameters:
+      - name: territoryName
+        in: query
+        required: true
+        schema:
+          type: string
+          format: varchar
+      - name: shortName
+        in: query
+        required: true
+        schema:
+          type: string
+          format: varchar
+      - name: territoryHq
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: bigint
+      - name: cityIds
+        in: query
+        required: true
+        schema:
+          type: string
+          format: longtext
+      - name: countryId
+        in: query
+        required: true
+        schema:
+          type: string
+          format: longtext
+      - name: stateId
+        in: query
+        required: true
+        schema:
+          type: integer
+          format: bigint
       requestBody:
         description: Creates territories
         content:
@@ -1549,124 +1771,157 @@ components:
       properties:
         entityName:
           type: string
+          format: longtext
         entityTypeId:
           type: integer
         entityId:
           type: integer
         affiliateId:
           type: integer
+          format: bigint
         addressLine1:
           type: string
+          format: longtext
         addressLine2:
           type: string
+          format: longtext
         countryId:
           type: integer
+          format: bigint
         stateId:
           type: integer
+          format: bigint
         cityId:
           type: integer
+          format: bigint
         pinCode:
           type: string
+          format: varchar
         phonenumber:
           type: string
+          format: varchar
         mobileNumber:
           type: string
+          format: varchar
         email:
           type: string
+          format: varchar
         contactName:
           type: string
+          format: varchar
         priorityId:
           type: integer
         pan:
           type: string
+          format: varchar
         gstn:
           type: string
+          format: varchar
         urdNumber:
           type: string
+          format: varchar
         corpId:
           type: string
+          format: varchar
         drugLicence_1:
           type: string
+          format: varchar
         drugLicence_2:
           type: string
+          format: varchar
         drugLicenceValidity:
           type: string
+          format: varchar
         foodLicence_1:
           type: string
+          format: varchar
         foodLicenceValidity:
           type: string
+          format: varchar
         salesBalanceLimit:
           type: number
-          format: float
+          format: decimal
         noOfCrDays:
           type: integer
         noOfGraceDays:
           type: integer
         calculateOn:
           type: string
+          format: varchar
         bankId:
           type: integer
         accountNo:
           type: string
+          format: longtext
         upiId:
           type: string
+          format: longtext
         openingBalance:
           type: number
-          format: float
+          format: decimal
         currentBalance:
           type: number
-          format: float
+          format: decimal
         discount:
           type: number
-          format: float
+          format: decimal
         bankCommission:
           type: number
-          format: float
+          format: decimal
         transportTypeId:
           type: integer
         defaultCharge:
           type: number
-          format: float
+          format: decimal
         caretaker:
           type: integer
+          format: bigint
         contact:
           type: string
+          format: varchar
         terms:
           type: string
+          format: longtext
         salesmanId:
           type: integer
+          format: bigint
         managerId:
           type: integer
-          format: int64
+          format: bigint
         sales_commission:
           type: number
-          format: float
+          format: decimal
         routeId:
           type: integer
-          format: int32
         accountId:
           type: integer
-          format: int64
+          format: bigint
         aadharId:
           type: string
+          format: varchar
         companyCode:
           type: string
+          format: varchar
         faxNumber:
           type: string
+          format: varchar
         repName:
           type: string
+          format: varchar
         repPhoneNumber:
           type: string
+          format: varchar
         password:
           type: string
+          format: varchar
         zoneId:
           type: integer
-          format: int64
+          format: bigint
         contactDob:
           type: string
+          format: varchar
         status:
           type: integer
-          format: int32
       xml:
         name: Entity
     user:
@@ -1674,52 +1929,65 @@ components:
       properties:
         userName:
           type: string
+          format: varchar
         mobileNumber:
           type: string
+          format: varchar
         contactNumber:
           type: string
+          format: varchar
         aadharId:
           type: string
+          format: varchar
         reportTo:
           type: integer
-          format: int64
+          format: bigint
         email:
           type: string
+          format: varchar
         genderId:
           type: integer
-          format: int64
         photo:
           type: string
+          format: longtext
         nationality:
           type: string
+          format: varchar
         address:
           type: string
+          format: longtext
         countryId:
           type: integer
-          format: int64
+          format: bigint
         stateId:
           type: integer
-          format: int64
+          format: bigint
         cityId:
           type: integer
-          format: int64
+          format: bigint
         referredBy:
           type: integer
-          format: int64
+          format: bigint
         referenceRelation:
           type: string
+          format: varchar
         pincode:
           type: string
+          format: varchar
         joiningDate:
           type: string
           format: date
+        loginId:
+         type: string
+         format:  longtext
         password:
-          type: string
+         type: string
+         format:  longtext
         departmentId:
           type: integer
-          format: int64
         permissions:
           type: string
+          format: longtext
         dob:
           type: string
           format: date
@@ -1735,39 +2003,41 @@ components:
           format: date
         approvedSalary:
           type: number
-          format: float
+          format: decimal
         designationSalary:
           type: number
-          format: float
+          format: decimal
         lastPaidDate:
           type: string
           format: date
         paymentModeId:
           type: integer
-          format: int64
+          format: bigint
         bankAccount:
           type: string
         bankId:
           type: integer
-          format: int64
+          format: bigint
         assignedHolidays:
           type: string
+          format: longtext
         specialization:
           type: string
+          format: varchar
         licenceNumber:
           type: string
+          format: varchar
         accountId:
           type: integer
-          format: int64
+          format: bigint
         zoneId:
           type: integer
-          format: int64
+          format: bigint
         divisionId:
           type: integer
-          format: int64
+          format: bigint
         roleId:
           type: integer
-          format: int64
       xml:
         name: User
     role:
@@ -1786,131 +2056,157 @@ components:
          type: integer
         entityName:
           type: string
-        affiliate:
+          format: longtext
+        entityTypeId:
           type: integer
-          format: int32
+        entityId:
+          type: integer
+        affiliateId:
+          type: integer
+          format: bigint
         addressLine1:
           type: string
+          format: longtext
         addressLine2:
           type: string
+          format: longtext
         countryId:
           type: integer
-          format: int32
+          format: bigint
         stateId:
           type: integer
-          format: int32
+          format: bigint
         cityId:
           type: integer
-          format: int32
+          format: bigint
         pinCode:
           type: string
+          format: varchar
         phonenumber:
           type: string
+          format: varchar
         mobileNumber:
           type: string
+          format: varchar
         email:
           type: string
+          format: varchar
         contactName:
           type: string
+          format: varchar
         priorityId:
           type: integer
-          format: int32
         pan:
           type: string
+          format: varchar
         gstn:
           type: string
+          format: varchar
         urdNumber:
           type: string
+          format: varchar
         corpId:
           type: string
+          format: varchar
         drugLicence_1:
           type: string
+          format: varchar
         drugLicence_2:
           type: string
+          format: varchar
         drugLicenceValidity:
           type: string
+          format: varchar
         foodLicence_1:
           type: string
+          format: varchar
         foodLicenceValidity:
           type: string
+          format: varchar
         salesBalanceLimit:
           type: number
-          format: float
+          format: decimal
         noOfCrDays:
           type: integer
-          format: int32
         noOfGraceDays:
           type: integer
-          format: int32
         calculateOn:
           type: string
+          format: varchar
         bankId:
           type: integer
-          format: int32
         accountNo:
           type: string
+          format: longtext
         upiId:
           type: string
+          format: longtext
         openingBalance:
           type: number
-          format: float
+          format: decimal
         currentBalance:
           type: number
-          format: float
+          format: decimal
         discount:
           type: number
-          format: float
+          format: decimal
         bankCommission:
           type: number
-          format: float
+          format: decimal
         transportTypeId:
           type: integer
-          format: int32
         defaultCharge:
           type: number
-          format: float
+          format: decimal
         caretaker:
           type: integer
-          format: int32
+          format: bigint
         contact:
           type: string
+          format: varchar
         terms:
           type: string
+          format: longtext
         salesmanId:
           type: integer
-          format: int64
+          format: bigint
         managerId:
           type: integer
-          format: int64
+          format: bigint
         sales_commission:
           type: number
-          format: float
+          format: decimal
         routeId:
           type: integer
-          format: int32
         accountId:
           type: integer
-          format: int64
+          format: bigint
         aadharId:
           type: string
+          format: varchar
         companyCode:
           type: string
+          format: varchar
         faxNumber:
           type: string
+          format: varchar
         repName:
           type: string
+          format: varchar
         repPhoneNumber:
           type: string
+          format: varchar
         password:
           type: string
+          format: varchar
         zoneId:
           type: integer
-          format: int64
+          format: bigint
         contactDob:
           type: string
+          format: varchar
         status:
           type: integer
-          format: int32
       xml:
         name: Entity
     user_update:
@@ -1920,52 +2216,64 @@ components:
          type: integer
         userName:
           type: string
+          format: varchar
         mobileNumber:
           type: string
+          format: varchar
         contactNumber:
           type: string
+          format: varchar
         aadharId:
           type: string
+          format: varchar
         reportTo:
           type: integer
-          format: int64
+          format: bigint
         email:
           type: string
+          format: varchar
         genderId:
           type: integer
-          format: int64
         photo:
           type: string
+          format: longtext
         nationality:
           type: string
+          format: varchar
         address:
           type: string
+          format: longtext
         countryId:
           type: integer
-          format: int64
+          format: bigint
         stateId:
           type: integer
-          format: int64
+          format: bigint
         cityId:
           type: integer
-          format: int64
+          format: bigint
         referredBy:
           type: integer
-          format: int64
+          format: bigint
         referenceRelation:
           type: string
+          format: varchar
         pincode:
           type: string
+          format: varchar
         joiningDate:
           type: string
           format: date
+        loginId:
+          type: string
+          format: longtext
         password:
           type: string
         departmentId:
           type: integer
-          format: int64
         permissions:
           type: string
+          format: longtext
         dob:
           type: string
           format: date
@@ -1981,10 +2289,10 @@ components:
           format: date
         approvedSalary:
           type: number
-          format: float
+          format: decimal
         designationSalary:
           type: number
-          format: float
+          format: decimal
         lastPaidDate:
           type: string
           format: date
@@ -1993,27 +2301,29 @@ components:
           format: int64
         bankAccount:
           type: string
+          format: varchar
         bankId:
           type: integer
           format: int64
         assignedHolidays:
           type: string
+          format: longtext
         specialization:
           type: string
+          format: varchar
         licenceNumber:
           type: string
+          format: varchar
         accountId:
           type: integer
-          format: int64
+          format: bigint
         zoneId:
           type: integer
-          format: int64
+          format: bigint
         divisionId:
           type: integer
-          format: int64
         roleId:
           type: integer
-          format: int64
       xml:
         name: User
     role_update:
@@ -2303,30 +2613,30 @@ components:
            type: integer
           taxValue:
            type: number
-           format: float
+           format: decimal
           salesTaxType: 
            type: integer
-           format: float
+           format: decimal
           salesSgst: 
            type: integer
-           format: float
+           format: decimal
           salesCgst:
            type: integer
           salesIgst:
            type: integer
-           format: float
+           format: decimal
           purchaseTaxType:
            type: string
            format: varchar
           purchaseSgst:
            type: integer
-           format: float
+           format: decimal
           purchaseCgst:
            type: integer
-           format: float
+           format: decimal
           purchaseIgst:
            type: integer
-           format: float
+           format: decimal
           gstOnMRPSales:
            type: string
            format: varchar
@@ -2363,30 +2673,30 @@ components:
            type: integer
           taxValue:
            type: number
-           format: float
+           format: decimal
           salesTaxType: 
            type: integer
-           format: float
+           format: decimal
           salesSgst: 
            type: integer
-           format: float
+           format: decimal
           salesCgst:
            type: integer
           salesIgst:
            type: integer
-           format: float
+           format: decimal
           purchaseTaxType:
            type: string
            format: varchar
           purchaseSgst:
            type: integer
-           format: float
+           format: decimal
           purchaseCgst:
            type: integer
-           format: float
+           format: decimal
           purchaseIgst:
            type: integer
-           format: float
+           format: decimal
           gstOnMRPSales:
            type: string
            format: varchar
