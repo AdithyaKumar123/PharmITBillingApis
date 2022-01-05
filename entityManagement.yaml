@@ -107,6 +107,11 @@ paths:
         required: true
         schema:
           type: string
+      - name: gstin
+        description: valid gstin
+        in: query
+        schema:
+          type: string
       - name: Affiliate
         description: mandatory only for distributor and cnf
         in: query
